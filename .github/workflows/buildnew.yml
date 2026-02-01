@@ -1,0 +1,18 @@
+name: build-agent
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt update && sudo apt install -y shc
+      - run: |
+          shc -f win-install.sh -o agent
+          chmod +x agent
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent
+          path: agent
